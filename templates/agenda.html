@@ -1,6 +1,9 @@
 {% extends "model-page.html" %}
 {% block content %}
     <h2> Agendamentos</h2>
+    <a href="agenda/evento/">
+        <button type="button"> Novo Evento </button>
+    </a>
     <ul>
     {% for i in eventos %}
         <li> {{i.titulo}} - {{i.dataEvento}} </li>

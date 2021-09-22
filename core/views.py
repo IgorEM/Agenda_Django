@@ -52,4 +52,8 @@ def lista_eventos(request):
 #     consulta = Evento.objects.get(titulo=titulo_evento)
 #     return HttpResponse('<h1>o local do evento é : {} <h1>'.format(consulta.data_criacao))
 
+@login_required(login_url='/login/')
+def evento(request):
+    return render(request, 'evento.html')
+
 

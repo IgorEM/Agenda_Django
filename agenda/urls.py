@@ -23,10 +23,12 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('agenda', views.lista_eventos),
+    path('agenda/evento/', views.evento),
     # path('',views.index), #outra forma de redirecionar pra pagina inicia ser /Agenda
     path('',RedirectView.as_view(url='/agenda')),
     path('login/', views.login_user), #criando a rota login/ para redirecionar quando o usuario nao estiver logado
     path('login/submit',views.submit_login), #login/submit/ /no final indica get
     path('logout/', views.logout_user),
+
 
 ]
