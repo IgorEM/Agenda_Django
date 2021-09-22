@@ -10,7 +10,7 @@ class Evento(models.Model):
     descricao = models.TextField(blank = True, null=True)
     data_evento = models.DateTimeField(verbose_name='Data do Evento')
     data_criacao = models.DateTimeField(auto_now=True)
-    usuario = models.ForeignKey(User, on_delete= models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete= models.CASCADE) #campo usado no filter
 
     class Meta: #metadados da tabela, forçando o nome da tabela core_evento se tornar evento
         db_table = 'evento'

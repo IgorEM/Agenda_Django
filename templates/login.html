@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Agenda</title>
+</head>
+<body>
+    <h1> Login </h1>
+    <!-- sempre que criar um form com post lembrar de botar o certificado de segurança -->
+    <form action="submit" method="POST">{% csrf_token %} <!-- submetendo metodo post. action: http://127.0.0.1:8000/login/submit -->
+        <div align="center">
+            <label>Usuário: </label>
+            <input type="text" name="username">
+            <label>Senha: </label>
+            <input type="password" name="password">
+            <button type="submit">Entrar</button>
+        </div>
+    </form>
+    <!--    messages.error(request, "Usuário ou Senha inválido")-->
+    {% for message in messages %}
+        <div align="center"><br>
+        <strong> Erro! </strong><br>
+            {{ message }}
+        </div>
+    {% endfor %}
+</body>
+</html>
