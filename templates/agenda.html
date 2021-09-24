@@ -6,7 +6,10 @@
     </a>
     <ul>
     {% for i in eventos %}
-        <li> {{i.titulo}} - {{i.dataEvento}} </li>
+        <li> {{i.titulo}} - {{i.dataEvento}}
+            ( <a href="#"> Editar </a>
+            / <a href="agenda/evento/delete/{{ i.id }}/"> Excluir </a> )
+        </li>
     {% endfor %}
     </ul>
 {% endblock %}

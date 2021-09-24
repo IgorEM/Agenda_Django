@@ -25,6 +25,7 @@ urlpatterns = [
     path('agenda', views.lista_eventos),
     path('agenda/evento/', views.evento),
     path('agenda/evento/submit', views.evento_submit),
+    path('agenda/evento/delete/<int:id_evento>/', views.delete_evento), #<> parametro inteiro chaado id_evento
     # path('',views.index), #outra forma de redirecionar pra pagina inicia ser /Agenda
     path('',RedirectView.as_view(url='/agenda')),
     path('login/', views.login_user), #criando a rota login/ para redirecionar quando o usuario nao estiver logado

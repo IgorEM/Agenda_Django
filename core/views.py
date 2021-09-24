@@ -72,4 +72,10 @@ def lista_eventos(request):
 def evento(request):
     return render(request, 'evento.html')
 
-
+@login_required(login_url='/login/')
+def delete_evento(request, id_evento):
+    usuario = request.user
+    evento = Evento.objects.get(id=id_evento) #filtrando por id e passando o parametro
+    if usuario == evento.usuario:
+        evento.delete()
+    return redirect('/')
