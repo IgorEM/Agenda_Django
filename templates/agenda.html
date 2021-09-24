@@ -7,7 +7,7 @@
     <ul>
     {% for i in eventos %}
         <li> {{i.titulo}} - {{i.dataEvento}}
-            ( <a href="#"> Editar </a>
+        ( <a href="agenda/evento/?id={{ i.id }}"> Editar </a> <!--  para editar nao precisa criar outra rota, basta adicionar o ir na parte de inserção do evento  ksk-->
             / <a href="agenda/evento/delete/{{ i.id }}/"> Excluir </a> )
         </li>
     {% endfor %}

@@ -27,11 +27,22 @@ def evento_submit(request):
         data_evento = request.POST.get('data_evento')
         descricao = request.POST.get('descricao')
         usuario = request.user
+        id_evento = request.POST.get('id_evento')
+        if id_evento:#se existir id, é pq estamos alterando um evento
+            evento = Evento.objects.get(id=id_evento) #pegou evento pelo id
+            if evento.usuario == usuario: #se o usuario logado for igual a o que quer fazer a  alteração
+                evento.titulo = titulo
+                evento.descricao = descricao
+                evento.data_evento = data_evento
+                evento.save()
+            #outra forma sem verificar o usuario->>> Evento.objects.filter(id=id_evento).update(titulo=titulo,data_evento=data_evento,descricao=descricao)
+
+        else: #se não existir estamos criando
         #temos que registrar agora
-        Evento.objects.create(titulo=titulo,
-                              data_evento=data_evento,
-                              descricao=descricao,
-                              usuario=usuario)
+            Evento.objects.create(titulo=titulo,
+                                  data_evento=data_evento,
+                                  descricao=descricao,
+                                  usuario=usuario)
         return redirect('/')
 
 
@@ -70,7 +81,11 @@ def lista_eventos(request):
 
 @login_required(login_url='/login/')
 def evento(request):
-    return render(request, 'evento.html')
+    id_evento = request.GET.get('id') #estamos pegando o id da url de eventos
+    dados = {}
+    if id_evento:
+        dados['evento'] = Evento.objects.get(id=id_evento) #armazenando os dados do evento de tal id . para poder retornar na edição(template evento.html)
+    return render(request, 'evento.html', dados)
 
 @login_required(login_url='/login/')
 def delete_evento(request, id_evento):
