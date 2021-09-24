@@ -20,6 +20,22 @@ def logout_user(request):
     logout(request) #importei logout
     return redirect('/') #redireciona pro index
 
+@login_required(login_url='/login/')
+def evento_submit(request):
+    if request.POST:
+        titulo = request.POST.get('titulo')
+        data_evento = request.POST.get('data_evento')
+        descricao = request.POST.get('descricao')
+        usuario = request.user
+        #temos que registrar agora
+        Evento.objects.create(titulo=titulo,
+                              data_evento=data_evento,
+                              descricao=descricao,
+                              usuario=usuario)
+        return redirect('/')
+
+
+
 def submit_login(request):
     if request.POST: # se a requisição for do tipo post
         username = request.POST.get('username') #recebendo o username e password do forms
