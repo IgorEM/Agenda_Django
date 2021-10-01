@@ -7,7 +7,7 @@
     <ul>
     {% for i in eventos %}
         <li>
-            <div style={% if i.get_evento_atrasado %} "color:red" {% endif %}>
+            <div style={% if i.get_evento_atrasado %} "color:red" {% endif %}> <!--eventos atrasados ficam em vermelho -->
                 {{i.titulo}} - {{i.dataEvento}}
                 ( <a href="agenda/evento/?id={{ i.id }}"> Editar </a> <!--  para editar nao precisa criar outra rota, basta adicionar o id na parte de inserção do evento  ksk-->
                 / <a href="agenda/evento/delete/{{ i.id }}/"> Excluir </a> )
