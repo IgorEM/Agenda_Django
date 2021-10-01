@@ -1,8 +1,11 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, HttpResponse, redirect
 from core.models import Evento #importou a tabela
 from django.contrib.auth.decorators import login_required #obrigar a está logado para ver a agenda
 from django.contrib.auth import authenticate, login, logout #usado para autenticar e logar na função submit_login
 from django.contrib import messages
+from django.http.response import Http404,JsonResponse
+from datetime import datetime, timedelta
 # Create your views here.
 
 
@@ -65,7 +68,9 @@ def submit_login(request):
 @login_required(login_url='/login/') #obrigar a está logado para ver a agenda # quando não estiver logado ele vai pra essa rota
 def lista_eventos(request):
     usuario = request.user
-    evento = Evento.objects.filter(usuario=usuario) #objects.all() - select * # agora esta retornando uma lista
+    #data_atual = datetime.now() - timedelta(hours=1)
+    evento = Evento.objects.filter(usuario=usuario)
+                                   #data_evento__gt=data_atual) #objects.all() - select * # agora esta retornando uma lista
     dados = {'eventos': evento} #dicionario #dados
     return render(request, 'agenda.html', dados)
 
@@ -90,7 +95,20 @@ def evento(request):
 @login_required(login_url='/login/')
 def delete_evento(request, id_evento):
     usuario = request.user
-    evento = Evento.objects.get(id=id_evento) #filtrando por id e passando o parametro
+    try:
+        evento = Evento.objects.get(id=id_evento) #filtrando por id e passando o parametro
+    except Exception:
+        raise Http404
     if usuario == evento.usuario:
         evento.delete()
+    else:
+        raise Http404()
     return redirect('/')
+
+
+#renderizando #lista no formato formato JsonResponse
+@login_required(login_url='/login/')
+def json_lista_evento(request,id_usuario): #pra pegar de acordo com o id daquele usuario
+    usuario = User.objects.get(id=id_usuario)
+    evento = Evento.objects.filter(usuario=usuario).values('id','titulo','descricao','data_evento','usuario')
+    return JsonResponse(list(evento), safe=False)

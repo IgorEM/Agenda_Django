@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime, timedelta
 #python manage.py makemigrations core
 #python manage.py sqlmigrate core 0001
 #python manage.py migrate core 0001
@@ -24,3 +25,9 @@ class Evento(models.Model):
 
     def getDataInputEvento(self):
         return self.data_evento.strftime('%Y-%m-%dT%H:%M')
+
+    def get_evento_atrasado(self):
+        if self.data_evento < datetime.now() - timedelta(hours=1):
+            return True
+        else:
+            return False
