@@ -106,7 +106,7 @@ def delete_evento(request, id_evento):
     return redirect('/')
 
 
-#renderizando #lista no formato formato JsonResponse
+#renderizando #lista no formato formato JsonResponse #
 @login_required(login_url='/login/')
 def json_lista_evento(request,id_usuario): #pra pegar de acordo com o id daquele usuario
     usuario = User.objects.get(id=id_usuario)
